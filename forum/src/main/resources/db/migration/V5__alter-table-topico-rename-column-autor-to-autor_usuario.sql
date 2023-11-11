@@ -1,0 +1,1 @@
+alter table topico rename column autor to autor_usuario;

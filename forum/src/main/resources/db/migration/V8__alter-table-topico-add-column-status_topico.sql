@@ -1,0 +1,1 @@
+alter table topico add column status_topico tinyint(1) default 0;

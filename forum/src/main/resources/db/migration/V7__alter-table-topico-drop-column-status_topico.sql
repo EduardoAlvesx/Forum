@@ -1,0 +1,1 @@
+alter table topico drop column status_topico;

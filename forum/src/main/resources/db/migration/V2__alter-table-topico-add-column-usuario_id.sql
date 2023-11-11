@@ -1,0 +1,1 @@
+alter table topico add usuario_id bigint not null
