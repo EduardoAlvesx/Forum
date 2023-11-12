@@ -20,7 +20,6 @@ public class PostagemResposta {
 
        Resposta resposta = new Resposta(null, topico, usuario, dados.resolucao());
        respostaRepository.save(resposta);
-
        topico.setStatusTopico(true);
     }
 }

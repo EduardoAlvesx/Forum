@@ -40,11 +40,7 @@ public class UsuarioController {
         usuario.atualizarInformacoes(dados);
 
         repository.save(usuario);
-        //repository.updateTopicoColumnUserNameById(dados.userName(), dados.id());
-
-
         return ResponseEntity.ok(new DadosDetalhamentoUsuario(usuario));
-
     }
     @DeleteMapping(path = "/{id}")
     @Transactional
