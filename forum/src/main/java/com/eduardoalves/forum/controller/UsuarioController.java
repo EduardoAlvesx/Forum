@@ -23,7 +23,6 @@ public class UsuarioController {
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroUsuario dados, UriComponentsBuilder builder) {
         Usuario usuario = new Usuario(dados);
-        log.severe(dados.userName());
         repository.save(usuario);
         var uri = builder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
 

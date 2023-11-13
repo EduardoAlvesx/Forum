@@ -25,7 +25,7 @@ public class RespostaController {
         var resposta = new Resposta();
         var uri = builder.path("/resposta").buildAndExpand(resposta.getId()).toUri();
 
-        postagemResposta.postar(dados);
+        //postagemResposta.postar(dados);
 
         return ResponseEntity.created(uri).body(dto);
     }
