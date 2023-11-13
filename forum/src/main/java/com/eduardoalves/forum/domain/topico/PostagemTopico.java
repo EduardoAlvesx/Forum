@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 @Service
-@Log
 public class PostagemTopico {
     @Autowired
     UsuarioRepository usuarioRepository;
@@ -16,9 +15,8 @@ public class PostagemTopico {
 
 
     public DadosDetalhamentoTopico postar(DadosPostagemTopico dadosTopico) {
-
         var usuario = usuarioRepository.getReferenceById(dadosTopico.usuarioId());
-        Topico topico = new Topico(
+        var topico = new Topico(
                 null,
                 dadosTopico.titulo(),
                 dadosTopico.mensagem(),
@@ -31,5 +29,4 @@ public class PostagemTopico {
         topicoRepository.save(topico);
         return new DadosDetalhamentoTopico(topico);
     }
-
 }

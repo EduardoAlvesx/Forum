@@ -28,5 +28,4 @@ public class Resposta {
     @JoinColumn(name = "usuario_id")
     private Usuario autor;
     private String resolucoes;
-
 }

@@ -1,6 +1,6 @@
 package com.eduardoalves.forum.domain.resposta;
 
-import com.eduardoalves.forum.domain.topico.DadosPostagemTopico;
+import com.eduardoalves.forum.domain.topico.Topico;
 import com.eduardoalves.forum.domain.topico.TopicoRepository;
 import com.eduardoalves.forum.domain.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +14,17 @@ public class PostagemResposta {
     TopicoRepository topicoRepository;
     @Autowired
     RespostaRepository respostaRepository;
-    public DadosDetalhamentoResposta postar(DadosPostagemResposta dados) {
+    public RespostaDetailsDTO postar(RespostaRequestDTO dados) {
        var usuario = usuarioRepository.getReferenceById(dados.usuarioId());
        var topico = topicoRepository.getReferenceById(dados.topicoId());
 
-       Resposta resposta = new Resposta(null, topico, usuario, dados.resolucao());
+       var resposta = new Resposta(null, topico, usuario, dados.resolucao());
        respostaRepository.save(resposta);
-       topico.setStatusTopico(true);
+       setStausTopico(topico);
+       return new RespostaDetailsDTO(resposta);
+    }
 
-       return new DadosDetalhamentoResposta(resposta);
+    private void setStausTopico(Topico topico) {
+        topico.setStatusTopico(true);
     }
 }

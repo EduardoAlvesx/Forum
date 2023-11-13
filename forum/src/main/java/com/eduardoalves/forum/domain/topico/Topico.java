@@ -33,6 +33,5 @@ public class Topico {
         this.titulo = dados.titulo();
         this.mensagem = dados.mensagem();
         this.curso = dados.curso();
-
     }
 }
