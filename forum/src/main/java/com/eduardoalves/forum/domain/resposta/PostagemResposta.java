@@ -14,12 +14,14 @@ public class PostagemResposta {
     TopicoRepository topicoRepository;
     @Autowired
     RespostaRepository respostaRepository;
-    public void postar(DadosPostagemResposta dados) {
+    public DadosDetalhamentoResposta postar(DadosPostagemResposta dados) {
        var usuario = usuarioRepository.getReferenceById(dados.usuarioId());
        var topico = topicoRepository.getReferenceById(dados.topicoId());
 
        Resposta resposta = new Resposta(null, topico, usuario, dados.resolucao());
        respostaRepository.save(resposta);
        topico.setStatusTopico(true);
+
+       return new DadosDetalhamentoResposta(resposta);
     }
 }
