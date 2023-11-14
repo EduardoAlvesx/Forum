@@ -29,7 +29,7 @@ public class Topico {
     private String autorUsuario;
     private String curso;
 
-    public void atualizarInformacoes(DadosAtualizacaoTopico dados) {
+    public void atualizarInformacoes(TopicoUpdateDTO dados) {
         this.titulo = dados.titulo();
         this.mensagem = dados.mensagem();
         this.curso = dados.curso();

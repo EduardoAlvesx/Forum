@@ -21,25 +21,25 @@ public class UsuarioController {
     private UsuarioRepository repository;
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroUsuario dados, UriComponentsBuilder builder) {
+    public ResponseEntity cadastrar(@RequestBody @Valid UsuarioRequestDTO dados, UriComponentsBuilder builder) {
         Usuario usuario = new Usuario(dados);
         repository.save(usuario);
         var uri = builder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(new DadosDetalhamentoUsuario(usuario));
+        return ResponseEntity.created(uri).body(new UsuarioDetailsDTO(usuario));
     }
     @GetMapping
-    public Page<DadosListagemUsuario> listar(Pageable pageable) {
-        return repository.findAll(pageable).map(DadosListagemUsuario::new);
+    public Page<UsuarioResponseDTO> listar(Pageable pageable) {
+        return repository.findAll(pageable).map(UsuarioResponseDTO::new);
     }
     @PutMapping
     @Transactional
-    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizacaoUsuario dados) {
+    public ResponseEntity atualizar(@RequestBody @Valid UsuarioUpdateDTO dados) {
         Usuario usuario = repository.getReferenceById(dados.id());
         usuario.atualizarInformacoes(dados);
 
         repository.save(usuario);
-        return ResponseEntity.ok(new DadosDetalhamentoUsuario(usuario));
+        return ResponseEntity.ok(new UsuarioDetailsDTO(usuario));
     }
     @DeleteMapping(path = "/{id}")
     @Transactional
@@ -52,6 +52,6 @@ public class UsuarioController {
     public ResponseEntity detalhar(@PathVariable BigInteger id) {
         Usuario usuario = repository.getReferenceById(id);
 
-        return ResponseEntity.ok(new DadosDetalhamentoUsuario(usuario));
+        return ResponseEntity.ok(new UsuarioDetailsDTO(usuario));
     }
 }

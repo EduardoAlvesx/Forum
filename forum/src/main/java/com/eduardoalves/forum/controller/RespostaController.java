@@ -18,10 +18,10 @@ public class RespostaController {
     PostagemResposta postagemResposta;
     @PostMapping
     @Transactional
-    public ResponseEntity<RespostaDetailsDTO> postar(@RequestBody RespostaRequestDTO dados, UriComponentsBuilder builder) {
+    public ResponseEntity<RespostaDetailsDTO> postar(@RequestBody RespostaRequestDTO dados, UriComponentsBuilder uriBuilder) {
         var dto = postagemResposta.postar(dados);
         var resposta = new Resposta();
-        var uri = builder.path("/resposta").buildAndExpand(resposta.getId()).toUri();
+        var uri = uriBuilder.path("/resposta").buildAndExpand(resposta.getId()).toUri();
 
         return ResponseEntity.created(uri).body(dto);
     }

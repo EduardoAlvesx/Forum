@@ -1,7 +1,6 @@
 package com.eduardoalves.forum.domain.topico;
 
 import com.eduardoalves.forum.domain.usuario.UsuarioRepository;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,7 @@ public class PostagemTopico {
     TopicoRepository topicoRepository;
 
 
-    public DadosDetalhamentoTopico postar(DadosPostagemTopico dadosTopico) {
+    public TopicoDetailsDTO postar(TopicoRequestDTO dadosTopico) {
         var usuario = usuarioRepository.getReferenceById(dadosTopico.usuarioId());
         var topico = new Topico(
                 null,
@@ -27,6 +26,6 @@ public class PostagemTopico {
                 dadosTopico.curso());
 
         topicoRepository.save(topico);
-        return new DadosDetalhamentoTopico(topico);
+        return new TopicoDetailsDTO(topico);
     }
 }

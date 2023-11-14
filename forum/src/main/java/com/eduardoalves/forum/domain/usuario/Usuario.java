@@ -18,12 +18,12 @@ public class Usuario {
     private String userName;
     private String userPassword;
 
-    public Usuario(DadosCadastroUsuario dados) {
+    public Usuario(UsuarioRequestDTO dados) {
         this.userName = dados.userName();
         this.userPassword = dados.userPassword();
     }
 
-    public void atualizarInformacoes(DadosAtualizacaoUsuario dados) {
+    public void atualizarInformacoes(UsuarioUpdateDTO dados) {
         this.userName = dados.userName();
         this.userPassword = dados.userPassword();
     }

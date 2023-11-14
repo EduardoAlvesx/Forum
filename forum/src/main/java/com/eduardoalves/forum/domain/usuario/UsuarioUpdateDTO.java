@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.math.BigInteger;
 
-public record DadosAtualizacaoUsuario(
+public record UsuarioUpdateDTO(
         BigInteger id,
         @NotBlank
         String userName,

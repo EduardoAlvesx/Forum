@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.math.BigInteger;
 
-public record DadosPostagemTopico(
+public record TopicoRequestDTO(
         @NotBlank(message = "Titulo nao pode estar vázio")
         String titulo,
         @NotBlank
