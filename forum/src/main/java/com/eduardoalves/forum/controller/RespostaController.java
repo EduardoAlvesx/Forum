@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.math.BigInteger;
+
 @RestController
 @RequestMapping("/resposta")
 public class RespostaController {
@@ -28,5 +30,21 @@ public class RespostaController {
     @GetMapping
     public Page<RespostaResponseDTO> listar(Pageable pageable) {
         return repository.findAll(pageable).map(RespostaResponseDTO::new);
+    }
+    @PatchMapping
+    @Transactional
+    public ResponseEntity atualizar(@RequestBody RespostaUpdateDTO dados) {
+        var resposta = repository.getReferenceById(dados.id());
+        resposta.atualizarInformacoes(dados);
+        repository.save(resposta);
+
+        return ResponseEntity.ok().build();
+    }
+    @DeleteMapping(path = "/{id}")
+    @Transactional
+    public ResponseEntity deletar(@PathVariable BigInteger id) {
+        repository.deleteById(id);
+
+        return ResponseEntity.notFound().build();
     }
 }

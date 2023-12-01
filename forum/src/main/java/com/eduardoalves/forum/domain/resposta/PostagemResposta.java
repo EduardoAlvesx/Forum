@@ -17,13 +17,14 @@ public class PostagemResposta {
     public RespostaDetailsDTO postar(RespostaRequestDTO dados) {
        var usuario = usuarioRepository.getReferenceById(dados.usuarioId());
        var topico = topicoRepository.getReferenceById(dados.topicoId());
-
        var resposta = new Resposta(null, topico, usuario, dados.resolucao());
        respostaRepository.save(resposta);
+
        setStausTopico(topico);
        return new RespostaDetailsDTO(resposta);
     }
 
+    // a cada resposta de um usuario referente a um topico, o status daquele topico passa a ser true
     private void setStausTopico(Topico topico) {
         topico.setStatusTopico(true);
     }

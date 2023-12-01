@@ -1,5 +1,7 @@
 package com.eduardoalves.forum.controller;
 
+import com.eduardoalves.forum.domain.topico.TopicoRepository;
+import com.eduardoalves.forum.domain.topico.TopicoResponseDTO;
 import com.eduardoalves.forum.domain.usuario.*;
 import jakarta.validation.Valid;
 import lombok.extern.java.Log;
@@ -19,6 +21,8 @@ import java.math.BigInteger;
 public class UsuarioController {
     @Autowired
     private UsuarioRepository repository;
+    @Autowired
+    private TopicoRepository topicoRepository;
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid UsuarioRequestDTO dados, UriComponentsBuilder builder) {
@@ -35,7 +39,7 @@ public class UsuarioController {
     @PutMapping
     @Transactional
     public ResponseEntity atualizar(@RequestBody @Valid UsuarioUpdateDTO dados) {
-        Usuario usuario = repository.getReferenceById(dados.id());
+        var usuario = repository.getReferenceById(dados.id());
         usuario.atualizarInformacoes(dados);
 
         repository.save(usuario);

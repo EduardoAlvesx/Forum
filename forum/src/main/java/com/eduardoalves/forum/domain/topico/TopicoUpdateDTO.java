@@ -6,10 +6,7 @@ import java.math.BigInteger;
 
 public record TopicoUpdateDTO(
         BigInteger id,
-        @NotBlank
         String titulo,
-        @NotBlank
         String mensagem,
-        @NotBlank
         String curso) {
 }

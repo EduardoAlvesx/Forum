@@ -22,7 +22,7 @@ public class PostagemTopico {
                 LocalDateTime.now(),
                 false,
                 usuario,
-                usuario.getUserName(),
+                usuario.getUsername(),
                 dadosTopico.curso());
 
         topicoRepository.save(topico);

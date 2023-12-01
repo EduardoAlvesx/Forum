@@ -28,4 +28,8 @@ public class Resposta {
     @JoinColumn(name = "usuario_id")
     private Usuario autor;
     private String resolucoes;
+
+    public void atualizarInformacoes(RespostaUpdateDTO dados) {
+        this.resolucoes = dados.resolucao();
+    }
 }

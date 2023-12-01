@@ -30,8 +30,16 @@ public class Topico {
     private String curso;
 
     public void atualizarInformacoes(TopicoUpdateDTO dados) {
-        this.titulo = dados.titulo();
-        this.mensagem = dados.mensagem();
-        this.curso = dados.curso();
+        if (dados.titulo() != null) {
+            this.titulo = dados.titulo();
+        }
+
+        if (dados.mensagem() != null) {
+            this.mensagem = dados.mensagem();
+        }
+
+        if (dados.curso() != null) {
+            this.curso = dados.curso();
+        }
     }
 }

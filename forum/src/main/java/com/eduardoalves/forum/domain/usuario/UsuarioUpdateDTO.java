@@ -6,8 +6,6 @@ import java.math.BigInteger;
 
 public record UsuarioUpdateDTO(
         BigInteger id,
-        @NotBlank
         String userName,
-        @NotBlank
         String userPassword) {
 }

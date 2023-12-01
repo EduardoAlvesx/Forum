@@ -1,4 +1,6 @@
 package com.eduardoalves.forum.domain.resposta;
 
-public record RespostaUpdateDTO() {
+import java.math.BigInteger;
+
+public record RespostaUpdateDTO(BigInteger id, String resolucao) {
 }
