@@ -11,9 +11,10 @@ public record TopicoResponseDTO(
         boolean status,
         String autorUsuario,
         BigInteger usarioId,
-        String curso) {
+        String curso,
+        Long total_respostas) {
     public TopicoResponseDTO(Topico topico) {
         this(topico.getId(), topico.getTitulo(), topico.getMensagem(), topico.getDataCriacao(), topico.isStatusTopico(),
-                topico.getAutorUsuario(), topico.getAutor().getId(), topico.getCurso());
+                topico.getAutorUsuario(), topico.getAutor().getId(), topico.getCurso(), topico.getTotal_respostas());
     }
 }

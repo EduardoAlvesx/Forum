@@ -28,6 +28,7 @@ public class Topico {
     private Usuario autor;
     private String autorUsuario;
     private String curso;
+    private Long total_respostas;
 
     public void atualizarInformacoes(TopicoUpdateDTO dados) {
         if (dados.titulo() != null) {

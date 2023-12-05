@@ -23,7 +23,8 @@ public class PostagemTopico {
                 false,
                 usuario,
                 usuario.getUsername(),
-                dadosTopico.curso());
+                dadosTopico.curso(),
+                0L);
 
         topicoRepository.save(topico);
         return new TopicoDetailsDTO(topico);

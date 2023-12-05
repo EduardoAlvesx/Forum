@@ -21,7 +21,13 @@ public class PostagemResposta {
        respostaRepository.save(resposta);
 
        setStausTopico(topico);
+       setTotal_respostas(topico);
        return new RespostaDetailsDTO(resposta);
+    }
+
+    private void setTotal_respostas(Topico topico) {
+        var totalRespostas = respostaRepository.countByTopicoId(topico.getId());
+        topico.setTotal_respostas(totalRespostas);
     }
 
     // a cada resposta de um usuario referente a um topico, o status daquele topico passa a ser true
