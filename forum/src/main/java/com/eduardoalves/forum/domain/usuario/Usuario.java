@@ -27,10 +27,11 @@ public class Usuario implements UserDetails {
 
     public Usuario(UsuarioRequestDTO dados) {
         this.userName = dados.userName();
-        this.userPassword = hashPassword(dados);
+        this.userPassword = hashPasswordCreate(dados);
+
     }
 
-    private String hashPassword(UsuarioRequestDTO dados) {
+    private String hashPasswordCreate(UsuarioRequestDTO dados) {
         return new BCryptPasswordEncoder().encode(dados.userPassword());
     }
 
@@ -39,9 +40,13 @@ public class Usuario implements UserDetails {
             this.userName = dados.userName();
         }
         if (dados.userPassword() != null) {
-            this.userPassword = dados.userPassword();
+            this.userPassword = hashPasswordUpdate(dados);
         }
 
+    }
+
+    private String hashPasswordUpdate(UsuarioUpdateDTO dados) {
+        return new BCryptPasswordEncoder().encode(dados.userPassword());
     }
 
     @Override
