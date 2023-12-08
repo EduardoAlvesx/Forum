@@ -27,6 +27,11 @@ public class AuthenticationController {
         var authentication = manager.authenticate(authenticationToken);
 
         var token = tokenService.generateToken((Usuario) authentication.getPrincipal());
+        if (token != null) {
+            System.out.println("Voce esta loggado, aqui esta o seu token");
+            System.out.println(token);
+        }
+
 
         return ResponseEntity.ok(new TokenResponseDTO(token));
     }

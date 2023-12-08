@@ -26,7 +26,6 @@ public class Topico {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
     private Usuario autor;
-    private String autorUsuario;
     private String curso;
     private Long total_respostas;
 

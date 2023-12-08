@@ -22,7 +22,6 @@ public class PostagemTopico {
                 LocalDateTime.now(),
                 false,
                 usuario,
-                usuario.getUsername(),
                 dadosTopico.curso(),
                 0L);
 

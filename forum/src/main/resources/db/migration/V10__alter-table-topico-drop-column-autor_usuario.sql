@@ -1,0 +1,1 @@
+alter table topico drop column autor_usuario
