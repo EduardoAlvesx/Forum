@@ -9,7 +9,6 @@ public record TopicoRequestDTO(
         String titulo,
         @NotBlank
         String mensagem,
-        BigInteger usuarioId,
         @NotBlank
         String curso) {
 }

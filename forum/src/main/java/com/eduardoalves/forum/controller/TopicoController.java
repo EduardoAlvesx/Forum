@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.math.BigInteger;
+import java.security.Principal;
 import java.time.LocalDateTime;
 
 @RestController
@@ -25,9 +27,9 @@ public class TopicoController {
     @Transactional
     public ResponseEntity postar(@RequestBody @Valid TopicoRequestDTO dadosTopico, UriComponentsBuilder builder) {
        var dto = postagemTopico.postar(dadosTopico);
-       Topico topico = new Topico();;
-
+       var topico = new Topico();;
        var uri = builder.path("topico/{id}").buildAndExpand(topico.getId()).toUri();
+
        return ResponseEntity.created(uri).body(dto);
 
     }
@@ -36,7 +38,7 @@ public class TopicoController {
         return repository.findAll(pageable).map(TopicoResponseDTO::new);
     }
     @GetMapping("/cursos/{curso}")
-    public Page<TopicoResponseDTO> burscarPorCurso(@PathVariable String curso, Pageable pageable) {
+    public Page<TopicoResponseDTO> searchByCourse(@PathVariable String curso, Pageable pageable) {
         return repository.findByCurso(curso, pageable).map(TopicoResponseDTO::new);
     }
     @GetMapping("/ano/{ano}")

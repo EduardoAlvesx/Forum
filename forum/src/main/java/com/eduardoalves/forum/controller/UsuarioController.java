@@ -14,10 +14,10 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.math.BigInteger;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("usuario")
-@Log
 public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -33,19 +33,24 @@ public class UsuarioController {
 
         return ResponseEntity.created(uri).body(new UsuarioDetailsDTO(usuario));
     }
+
     @GetMapping
     public Page<UsuarioResponseDTO> listar(Pageable pageable) {
         return usuarioRepository.findAll(pageable).map(UsuarioResponseDTO::new);
     }
+
     @PutMapping
     @Transactional
-    public ResponseEntity atualizar(@RequestBody @Valid UsuarioUpdateDTO dados) {
-        var usuario = usuarioRepository.getReferenceById(dados.id());
+    public ResponseEntity atualizar(@RequestBody @Valid UsuarioUpdateDTO dados, Principal principal) {
+        var currentUser = principal.getName();
+        var id = usuarioRepository.getIdByUserName(currentUser);
+        var usuario = usuarioRepository.getReferenceById(id);
         usuario.atualizarInformacoes(dados);
 
         usuarioRepository.save(usuario);
         return ResponseEntity.ok(new UsuarioDetailsDTO(usuario));
     }
+
     @DeleteMapping(path = "/{id}")
     @Transactional
     public ResponseEntity deletar(@PathVariable BigInteger id) {
@@ -53,10 +58,9 @@ public class UsuarioController {
 
         return ResponseEntity.notFound().build();
     }
-    @GetMapping(path = "/{id}")
-    public ResponseEntity detalhar(@PathVariable BigInteger id) {
-        Usuario usuario = usuarioRepository.getReferenceById(id);
 
-        return ResponseEntity.ok(new UsuarioDetailsDTO(usuario));
+    @GetMapping("/{userName}")
+    public Page<UsuarioResponseDTO> buscarPorNome(@PathVariable String userName, Pageable pageable) {
+       return usuarioRepository.findUsuarioByUserName(userName, pageable).map(UsuarioResponseDTO::new);
     }
 }

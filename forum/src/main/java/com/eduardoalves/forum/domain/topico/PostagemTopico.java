@@ -1,6 +1,7 @@
 package com.eduardoalves.forum.domain.topico;
 
 import com.eduardoalves.forum.domain.usuario.UsuarioRepository;
+import com.eduardoalves.forum.infra.security.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,24 +9,27 @@ import java.time.LocalDateTime;
 @Service
 public class PostagemTopico {
     @Autowired
-    UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
     @Autowired
-    TopicoRepository topicoRepository;
+    private TopicoRepository topicoRepository;
+    @Autowired
+    private CurrentUser currentUser;
 
-
-    public TopicoDetailsDTO postar(TopicoRequestDTO dadosTopico) {
-        var usuario = usuarioRepository.getReferenceById(dadosTopico.usuarioId());
+    public TopicoDetailsDTO postar(TopicoRequestDTO dataTopico) {
+        var currentUser = this.currentUser.getAuthentication().getName();
+        var id = usuarioRepository.getIdByUserName(currentUser);
+        var usuario = usuarioRepository.getReferenceById(id);
         var topico = new Topico(
                 null,
-                dadosTopico.titulo(),
-                dadosTopico.mensagem(),
+                dataTopico.titulo(),
+                dataTopico.mensagem(),
                 LocalDateTime.now(),
                 false,
                 usuario,
-                dadosTopico.curso(),
+                dataTopico.curso(),
                 0L);
 
-        topicoRepository.save(topico);
+        this.topicoRepository.save(topico);
         return new TopicoDetailsDTO(topico);
     }
 }

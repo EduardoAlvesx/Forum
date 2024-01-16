@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.math.BigInteger;
@@ -31,10 +32,6 @@ public class Usuario implements UserDetails {
 
     }
 
-    private String hashPasswordCreate(UsuarioRequestDTO dados) {
-        return new BCryptPasswordEncoder().encode(dados.userPassword());
-    }
-
     public void atualizarInformacoes(UsuarioUpdateDTO dados) {
         if (dados.userName() != null) {
             this.userName = dados.userName();
@@ -43,6 +40,9 @@ public class Usuario implements UserDetails {
             this.userPassword = hashPasswordUpdate(dados);
         }
 
+    }
+    private String hashPasswordCreate(UsuarioRequestDTO dados) {
+        return new BCryptPasswordEncoder().encode(dados.userPassword());
     }
 
     private String hashPasswordUpdate(UsuarioUpdateDTO dados) {

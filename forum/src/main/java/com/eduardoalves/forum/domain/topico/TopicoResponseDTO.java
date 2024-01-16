@@ -13,6 +13,6 @@ public record TopicoResponseDTO(
         String curso,
         Long total_respostas) {
     public TopicoResponseDTO(Topico topico) {
-        this(topico.getId(), topico.getTitulo(), topico.getMensagem(), topico.getDataCriacao(), topico.isStatusTopico(), topico.getAutor().getId(), topico.getCurso(), topico.getTotal_respostas());
+        this(topico.getId(), topico.getTitulo(), topico.getMensagem(), topico.getDataCriacao(), topico.isStatusTopico(), topico.getAutor().getId(), topico.getCurso(), topico.getTotalRespostas());
     }
 }

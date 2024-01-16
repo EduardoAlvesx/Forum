@@ -27,7 +27,7 @@ public class Topico {
     @JoinColumn(name = "usuario_id")
     private Usuario autor;
     private String curso;
-    private Long total_respostas;
+    private Long totalRespostas;
 
     public void atualizarInformacoes(TopicoUpdateDTO dados) {
         if (dados.titulo() != null) {

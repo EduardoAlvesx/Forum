@@ -27,7 +27,7 @@ public class TokenService {
                     .withExpiresAt(expireDate())
                     .sign(alogoritimo);
         } catch (JWTCreationException exception) {
-            throw new RuntimeException("Erro ao gerar o token", exception);
+            throw new JWTCreationException("Erro ao gerar o token JWT", exception);
         }
     }
     public String getSubject(String token) {
@@ -39,7 +39,7 @@ public class TokenService {
                     .verify(token)
                     .getSubject();
         } catch (JWTVerificationException exception) {
-            throw new RuntimeException("Token expirado ou inválido", exception);
+            throw new JWTVerificationException("Token expirado ou inválido");
         }
     }
 

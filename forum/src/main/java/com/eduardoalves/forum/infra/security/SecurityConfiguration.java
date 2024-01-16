@@ -14,8 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.security.Security;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
@@ -23,9 +21,10 @@ public class SecurityConfiguration {
     private SecurityFilter securityFilter;
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.csrf(csrf -> csrf.disable())
-                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(matcherRegistry -> {
+        return httpSecurity.csrf(
+                csrf -> csrf.disable()).sessionManagement(
+                        sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).authorizeHttpRequests(
+                                matcherRegistry -> {
                     matcherRegistry.requestMatchers(HttpMethod.POST, "/login", "/usuario").permitAll();
                     matcherRegistry.anyRequest().authenticated();
                 })

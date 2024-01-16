@@ -3,31 +3,37 @@ package com.eduardoalves.forum.domain.resposta;
 import com.eduardoalves.forum.domain.topico.Topico;
 import com.eduardoalves.forum.domain.topico.TopicoRepository;
 import com.eduardoalves.forum.domain.usuario.UsuarioRepository;
+import com.eduardoalves.forum.infra.security.CurrentUser;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PostagemResposta {
     @Autowired
-    UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
     @Autowired
-    TopicoRepository topicoRepository;
+    private TopicoRepository topicoRepository;
     @Autowired
-    RespostaRepository respostaRepository;
+    private RespostaRepository respostaRepository;
+    @Autowired
+    private CurrentUser currentUser;
     public RespostaDetailsDTO postar(RespostaRequestDTO dados) {
-       var usuario = usuarioRepository.getReferenceById(dados.usuarioId());
-       var topico = topicoRepository.getReferenceById(dados.topicoId());
-       var resposta = new Resposta(null, topico, usuario, dados.resolucao());
-       respostaRepository.save(resposta);
+        var currentUser = this.currentUser.getAuthentication().getName();
+        var id = usuarioRepository.getIdByUserName(currentUser);
+        var usuario = usuarioRepository.getReferenceById(id);
+        var topico = topicoRepository.getReferenceById(dados.topicoId());
+        var resposta = new Resposta(null, topico, usuario, dados.resolucao());
 
-       setStausTopico(topico);
-       setTotal_respostas(topico);
-       return new RespostaDetailsDTO(resposta);
+        respostaRepository.save(resposta);
+        setStausTopico(topico);
+        setTotalRespostas(topico);
+        return new RespostaDetailsDTO(resposta);
     }
 
-    private void setTotal_respostas(Topico topico) {
+    private void setTotalRespostas(Topico topico) {
         var totalRespostas = respostaRepository.countByTopicoId(topico.getId());
-        topico.setTotal_respostas(totalRespostas);
+        topico.setTotalRespostas(totalRespostas);
     }
 
     // a cada resposta de um usuario referente a um topico, o status daquele topico passa a ser true

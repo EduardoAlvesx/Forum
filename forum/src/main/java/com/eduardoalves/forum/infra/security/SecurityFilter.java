@@ -1,5 +1,6 @@
 package com.eduardoalves.forum.infra.security;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.eduardoalves.forum.domain.usuario.Usuario;
 import com.eduardoalves.forum.domain.usuario.UsuarioRepository;
 import jakarta.servlet.FilterChain;
@@ -22,16 +23,24 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        var token = recoverToken(request);
+        try {
+            var token = recoverToken(request);
 
-        if (token != null) {
-            var subject = tokenService.getSubject(token);
-            var usuario = usuarioRepository.findByUserName(subject);
-            var authentication = new UsernamePasswordAuthenticationToken(usuario, null,
-                    usuario.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            if (token != null) {
+                var subject = tokenService.getSubject(token);
+
+                var usuario = usuarioRepository.findByUserName(subject);
+                var authentication = new UsernamePasswordAuthenticationToken(usuario, null,
+                        usuario.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+            filterChain.doFilter(request, response);
+
+        } catch (JWTVerificationException exception) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(exception.getLocalizedMessage());
         }
-        filterChain.doFilter(request, response);
     }
 
     private String recoverToken(HttpServletRequest request) {
@@ -40,6 +49,5 @@ public class SecurityFilter extends OncePerRequestFilter {
             return authorizationHeader.replace("Bearer ", "");
         }
         return null;
-
     }
 }
