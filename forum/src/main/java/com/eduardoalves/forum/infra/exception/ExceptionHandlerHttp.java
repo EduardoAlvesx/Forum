@@ -27,6 +27,6 @@ public class ExceptionHandlerHttp {
     }
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ResponseEntity tratarDuplicates(SQLIntegrityConstraintViolationException exception) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("UserName já existe");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Elemento já existe");
     }
 }
