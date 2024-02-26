@@ -3,14 +3,12 @@ package com.eduardoalves.forum.controller;
 import com.eduardoalves.forum.domain.topico.TopicoRepository;
 import com.eduardoalves.forum.domain.usuario.*;
 import jakarta.validation.Valid;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.math.BigInteger;

@@ -1,7 +1,7 @@
 package com.eduardoalves.forum.domain.topico;
 
 import com.eduardoalves.forum.domain.usuario.UsuarioRepository;
-import com.eduardoalves.forum.infra.security.CurrentUser;
+import com.eduardoalves.forum.infra.security.AuthenticatedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +13,11 @@ public class PostagemTopico {
     @Autowired
     private TopicoRepository topicoRepository;
     @Autowired
-    private CurrentUser currentUser;
+    private AuthenticatedUser authenticatedUser;
 
     public TopicoDetailsDTO postar(TopicoRequestDTO dataTopico) {
-        var currentUser = this.currentUser.getAuthentication().getName();
-        var id = usuarioRepository.getIdByUserName(currentUser);
+        var authenticatedUser = this.authenticatedUser.getAuthentication().getName();
+        var id = usuarioRepository.getIdByUserName(authenticatedUser);
         var usuario = usuarioRepository.getReferenceById(id);
         var topico = new Topico(
                 null,

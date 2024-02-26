@@ -3,8 +3,7 @@ package com.eduardoalves.forum.domain.resposta;
 import com.eduardoalves.forum.domain.topico.Topico;
 import com.eduardoalves.forum.domain.topico.TopicoRepository;
 import com.eduardoalves.forum.domain.usuario.UsuarioRepository;
-import com.eduardoalves.forum.infra.security.CurrentUser;
-import lombok.Getter;
+import com.eduardoalves.forum.infra.security.AuthenticatedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +16,10 @@ public class PostagemResposta {
     @Autowired
     private RespostaRepository respostaRepository;
     @Autowired
-    private CurrentUser currentUser;
+    private AuthenticatedUser authenticatedUser;
     public RespostaDetailsDTO postar(RespostaRequestDTO dados) {
-        var currentUser = this.currentUser.getAuthentication().getName();
-        var id = usuarioRepository.getIdByUserName(currentUser);
+        var authenticatedUser = this.authenticatedUser.getAuthentication().getName();
+        var id = usuarioRepository.getIdByUserName(authenticatedUser);
         var usuario = usuarioRepository.getReferenceById(id);
         var topico = topicoRepository.getReferenceById(dados.topicoId());
         var resposta = new Resposta(null, topico, usuario, dados.resolucao());
